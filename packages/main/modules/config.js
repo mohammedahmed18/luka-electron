@@ -8,10 +8,11 @@ class ConfigModule extends Module {
 
    load() {
       const pathToConfig = path.join(app.getPath('userData'), 'config.json')
-      console.log(pathToConfig)
       this.config = new teeny(pathToConfig, this.getDefaultConfig())
 
-      return this.config.save()
+      return new Promise((resolve, reject) => {
+         resolve(this.config.save())
+      })
    }
 
    async set(key, value) {

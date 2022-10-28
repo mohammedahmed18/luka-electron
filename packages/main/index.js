@@ -5,7 +5,7 @@ import { init as initModules } from './lib/module-manager'
 
 // modules
 import ConfigModule from './modules/config'
-
+import DB from './modules/db'
 const appRoot = path.resolve(__dirname, '..')
 
 const rendererDistPath = path.join(appRoot, 'renderer')
@@ -129,6 +129,22 @@ app.on('ready', async () => {
       app.quit()
    }
 
-   // init the modules(
-   initModules(new ConfigModule())
+   // init the db module first
+
+   let db
+   ;(async () => {
+      db = new DB()
+      await db.init()
+      initOtherModules(db)
+   })()
+
+   // init other modules
+
+   async function initOtherModules(db) {
+      if (db.loaded) {
+         initModules(new ConfigModule())
+      } else {
+         setTimeout(() => initOtherModules(db), 500)
+      }
+   }
 })
