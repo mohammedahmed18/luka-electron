@@ -6,6 +6,8 @@ import { init as initModules } from './lib/module-manager'
 // modules
 import ConfigModule from './modules/config'
 import DB from './modules/db'
+import UserModule from './modules/user'
+
 const appRoot = path.resolve(__dirname, '..')
 
 const rendererDistPath = path.join(appRoot, 'renderer')
@@ -130,7 +132,6 @@ app.on('ready', async () => {
    }
 
    // init the db module first
-
    let db
    ;(async () => {
       db = new DB()
@@ -142,7 +143,7 @@ app.on('ready', async () => {
 
    async function initOtherModules(db) {
       if (db.loaded) {
-         initModules(new ConfigModule())
+         initModules(new ConfigModule(), new UserModule(db.db))
       } else {
          setTimeout(() => initOtherModules(db), 500)
       }

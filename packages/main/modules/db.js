@@ -3,14 +3,15 @@ import Module from './module'
 // import { app } from 'electron'
 // import path from 'path'
 class DB extends Module {
+   db
    async load() {
-      const sequelize = new Sequelize({
+      this.db = new Sequelize({
          dialect: 'sqlite',
          storage: 'db.sqlite'
       })
 
       return new Promise((resolve, reject) => {
-         resolve(sequelize.authenticate())
+         resolve(this.db.authenticate())
       })
    }
 }

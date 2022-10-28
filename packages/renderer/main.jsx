@@ -10,11 +10,11 @@ import './index.css'
 import './locale/i18n'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-   <React.StrictMode>
-      <LocaleProvider>
-         <MainLayout>
-            <App />
-         </MainLayout>
-      </LocaleProvider>
-   </React.StrictMode>
+   // <React.StrictMode>
+   <LocaleProvider>
+      <MainLayout>
+         <App />
+      </MainLayout>
+   </LocaleProvider>
+   // </React.StrictMode>
 )
