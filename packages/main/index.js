@@ -132,20 +132,25 @@ app.on('ready', async () => {
    }
 
    // init the db module first
-   let db
+   let dbInstance
    ;(async () => {
-      db = new DB()
-      await db.init()
-      initOtherModules(db)
+      dbInstance = new DB()
+      await dbInstance.init()
+      initOtherModules(dbInstance)
    })()
 
    // init other modules
 
-   async function initOtherModules(db) {
-      if (db.loaded) {
-         initModules(new ConfigModule(), new UserModule(db.db))
+   async function initOtherModules(dbInstance) {
+      if (dbInstance.loaded) {
+         initModules(
+            // //////////////
+            new ConfigModule(),
+            // /////////////////
+            new UserModule(dbInstance.db)
+         )
       } else {
-         setTimeout(() => initOtherModules(db), 500)
+         setTimeout(() => initOtherModules(dbInstance), 500)
       }
    }
 })

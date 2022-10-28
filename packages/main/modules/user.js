@@ -10,6 +10,7 @@ class User extends Module {
       super()
       this.db = _db
    }
+
    async load() {
       //    define user model
       const UserModel = this.db.define('User', {
@@ -36,6 +37,7 @@ class User extends Module {
          const user = await UserModel.findOne({
             where: { username: data.username }
          })
+         //  //////////// user exist
          if (user) {
             return JsonError('this username already exists')
          }
