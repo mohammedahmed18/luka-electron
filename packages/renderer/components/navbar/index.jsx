@@ -1,4 +1,4 @@
-import { BiHash } from 'react-icons/bi'
+import { SiElectron } from 'react-icons/si'
 import { MdOutlineDarkMode } from 'react-icons/md'
 import { FiSettings } from 'react-icons/fi'
 import { BsTranslate } from 'react-icons/bs'
@@ -10,7 +10,7 @@ const Navbar = () => {
    return (
       <div className={styles.top_nav}>
          <div className={styles.logo}>
-            <BiHash size="35" className={styles.title_hash_tag} />
+            <SiElectron size="35" className={styles.title_hash_tag} />
             <h1 className={styles.title_text}>{t('title')}</h1>
          </div>
          <div className={styles.icons}>

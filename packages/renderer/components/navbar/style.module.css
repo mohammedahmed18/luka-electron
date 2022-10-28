@@ -1,9 +1,10 @@
+@import '../../styles/vars.css';
+
 .top_nav {
-   @apply flex flex-row items-center justify-between
-   bg-gray-900
-    w-full h-20
-    m-0 
-    shadow-xl;
+   @apply flex flex-row items-center
+      justify-between w-full h-20 m-0 shadow-xl;
+
+   background-color: var(--gray-4);
 }
 .title_text {
    @apply text-2xl text-blue-500 tracking-wider font-semibold text-opacity-80 

@@ -3,6 +3,9 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import channels from '../shared/lib/ipc-channels'
 import { init as initModules } from './lib/module-manager'
 
+// modules
+import ConfigModule from './modules/config'
+
 const appRoot = path.resolve(__dirname, '..')
 
 const rendererDistPath = path.join(appRoot, 'renderer')
@@ -10,7 +13,7 @@ const preloadDistPath = path.join(appRoot, 'preload')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-let mainWindow: Electron.BrowserWindow | null = null
+let mainWindow = null
 
 // Quit when all windows are closed
 app.on('window-all-closed', () => {
@@ -60,7 +63,7 @@ app.on('ready', async () => {
    })
 
    // the url of the html file
-   let url: string
+   let url
 
    if (process.env.VITE_DEV_SERVER_URL) {
       url = `${process.env.VITE_DEV_SERVER_URL}`
@@ -98,14 +101,14 @@ app.on('ready', async () => {
       }
    })
 
-   mainWindow.on('maximize', (event: Event) => {
+   mainWindow.on('maximize', event => {
       // tell the ui to change the icon to minimize
       mainWindow.webContents.send('size_changed', {
          maximized: true
       })
    })
 
-   mainWindow.on('unmaximize', (event: Event) => {
+   mainWindow.on('unmaximize', event => {
       // tell the ui to change the icon to maximize
       mainWindow.webContents.send('size_changed', {
          maximized: false
@@ -126,5 +129,6 @@ app.on('ready', async () => {
       app.quit()
    }
 
-   // init the modules
+   // init the modules(
+   initModules(new ConfigModule())
 })

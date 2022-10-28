@@ -1,23 +1,13 @@
 import React, { createContext, useEffect, useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 
-type LocalContext = {
-   toggleLang?: () => void
-   setRawLang?: (T: string) => void
-   t: (T: string) => string
-   language: string
-}
-
 const initial = {
    language: 'en',
    t: () => ''
 }
-export const LocaleContext = createContext<LocalContext>(initial)
+export const LocaleContext = createContext(initial)
 
-type props = {
-   children: React.ReactNode
-}
-export const LocaleProvider = ({ children }: props) => {
+export const LocaleProvider = ({ children }) => {
    const { i18n } = useTranslation()
 
    const initiateLocale = () => {
@@ -25,11 +15,11 @@ export const LocaleProvider = ({ children }: props) => {
          setRawLang(localStorage.getItem('lang') || 'en')
    }
 
-   const handleDirection = (dir: string) => {
+   const handleDirection = dir => {
       document.documentElement.dir = dir
    }
 
-   const setRawLang = (lang: string) => {
+   const setRawLang = lang => {
       const dir = lang == 'ar' ? 'rtl' : 'ltr'
       localStorage.setItem('lang', lang)
       document.documentElement.lang = lang
