@@ -1,11 +1,12 @@
 import React from 'react'
-import { BrowserRouter, Routes } from 'react-router-dom'
-
+import { Route, Routes, Navigate } from 'react-router-dom'
+import LoginForm from './components/loginForm'
 const Router = () => {
    return (
-      <BrowserRouter>
-         <Routes></Routes>
-      </BrowserRouter>
+      <Routes>
+         <Route path="/" element={<LoginForm />} />
+         <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
    )
 }
 

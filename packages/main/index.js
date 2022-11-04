@@ -36,6 +36,7 @@ app.on('ready', async () => {
       titleBarStyle: 'hiddenInset', // MacOS polished window
       webPreferences: {
          nodeIntegration: true,
+         enableRemoteModule: true,
          contextIsolation: false,
          autoplayPolicy: 'no-user-gesture-required',
          webSecurity: process.env.VITE_DEV_SERVER_URL == null,
@@ -44,15 +45,15 @@ app.on('ready', async () => {
    })
 
    mainWindow.maximize()
-   // Open dev tools if the app runs in debug or development mode
 
-   if (
-      process.argv.includes('--devtools') ||
-      process.env.NODE_ENV === 'development' ||
-      process.env.VITE_DEV_SERVER_URL
-   ) {
-      mainWindow.webContents.openDevTools({ mode: 'detach' })
-   }
+   // Open dev tools if the app runs in debug or development mode
+   // if (
+   //    process.argv.includes('--devtools') ||
+   //    process.env.NODE_ENV === 'development' ||
+   //    process.env.VITE_DEV_SERVER_URL
+   // ) {
+   //    mainWindow.webContents.openDevTools({ mode: 'detach' })
+   // }
 
    mainWindow.on('closed', () => {
       // Dereference the window object
@@ -73,7 +74,8 @@ app.on('ready', async () => {
       url = `file://${rendererDistPath}/index.html`
    }
 
-   mainWindow.loadURL(url)
+   await mainWindow.loadURL(url)
+   mainWindow.webContents.openDevTools({ mode: 'detach' })
 
    // only show the window when the app is ready , this will prevent the white flash problem
    ipcMain.on(channels.APP_READY, () => {
@@ -143,12 +145,7 @@ app.on('ready', async () => {
 
    async function initOtherModules(dbInstance) {
       if (dbInstance.loaded) {
-         initModules(
-            // //////////////
-            new ConfigModule(),
-            // /////////////////
-            new UserModule(dbInstance.db)
-         )
+         initModules(new ConfigModule(), new UserModule(dbInstance))
       } else {
          setTimeout(() => initOtherModules(dbInstance), 500)
       }

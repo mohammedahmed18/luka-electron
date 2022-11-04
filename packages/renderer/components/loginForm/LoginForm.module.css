@@ -1,0 +1,6 @@
+@import '../../styles/vars.css';
+
+.container {
+   @apply flex flex-col justify-center h-screen;
+   background-color: var(--gray-4);
+}

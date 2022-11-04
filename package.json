@@ -7,13 +7,15 @@
       "dev": "vite",
       "build": "vite build",
       "preview": "vite preview",
-      "prod": "electron .",
+      "prod": "SET ELECTRON_DISABLE_SECURITY_WARNINGS=true && electron .",
       "package": "electron-builder"
    },
    "dependencies": {
       "bcrypt": "^5.1.0",
       "framer-motion": "^7.5.3",
       "i18next": "^21.10.0",
+      "immer": "^9.0.16",
+      "jsonwebtoken": "^8.5.1",
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
       "react-i18next": "^11.18.6",
@@ -24,6 +26,7 @@
       "teeny-conf": "^4.0.0"
    },
    "devDependencies": {
+      "@electron/rebuild": "^3.2.10",
       "@types/react": "^18.0.17",
       "@types/react-dom": "^18.0.6",
       "@vitejs/plugin-react": "^2.0.1",
